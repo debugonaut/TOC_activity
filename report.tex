@@ -64,13 +64,14 @@
 % ============================================================
 \begin{titlepage}
     \centering
+    \includegraphics[width=0.6\textwidth]{logo.png} % Placeholder for Institute Logo
+    \newline
     \vspace*{0.5cm}
-    {\Huge \textbf{MITAOE College, Pune}\par}
+    {\Huge \textbf{MIT Academy of Engineering, Pune}\par}
     \vspace{0.3cm}
-    {\Large \textbf{Department of Computer Engineering}\par}
+    {\Large \textbf{Department of Software Engineering}\par}
     \vspace{1cm}
     
-    \includegraphics[width=0.25\textwidth]{example-image-b} % Placeholder for Institute Logo
     
     \vspace{1.5cm}
     {\Large \textbf{Theory of Computation (2025-26)}\par}
@@ -210,55 +211,65 @@ We implement validation for 6 essential student data fields:
 The validation engine utilizes the following formal regular expressions ($\gamma$):
 
 \begin{enumerate}
-    \item \textbf{PRN (12 Digits)}: $\gamma_{PRN} = [0-9]^{12}$
-    \item \textbf{Inst. Email}: $\gamma_{EMAIL} = [a-z0-9._]+@mitaoe \cdot ac \cdot in$
-    \item \textbf{CGPA}: $\gamma_{CGPA} = ([0-9](\cdot[0-9]{1,2})? | 10(\cdot 0{1,2})?)$
-    \item \textbf{LinkedIn URL}: $\gamma_{LNK} = https://(www\cdot)?linkedin\cdot com/in/[a-zA-Z0-9-]+$
+    \item \textbf{PRN (12 Digits)}: $\gamma_{PRN} = \verb|^|\d{12}\verb|$|
+    \item \textbf{Inst. Email}: $\gamma_{EMAIL} = \verb|^|[a-z0-9._]+@mitaoe\cdot ac\cdot in\verb|$|
+    \item \textbf{CGPA}: $\gamma_{CGPA} = \verb|^|([0-9](\cdot\d{1,2})? | 10(\cdot 0{1,2})?)\verb|$|
+    \item \textbf{LinkedIn URL}: $\gamma_{LNK} = \verb|^|https://(www\cdot)?linkedin\cdot com/in/[a-zA-Z0-9-]+\verb|$|
 \end{enumerate}
 
 \subsection{DFA Construction}
-To demonstrate the adherence to Regular Language properties, we construct the DFA for specific fields.
+To prove these languages are Regular, we construct Deterministic Finite Automata (DFA) that model the transition logic for the most structurally complex fields.
 
-\subsubsection{DFA for PRN Validation}
-The PRN DFA ($M_{PRN}$) ensures exactly 12 numeric transitions from start to accept state.
+\subsubsection{DFA for CGPA Validation}
+The CGPA validation is a classic example of a Regular Language that handles numerical boundaries and optional decimal separators. The DFA $M_{CGPA}$ recognizes strings $w \in \{0.00 \dots 10.00\}$.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto, thick]
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto, thick]
    \node[state,initial] (q0)   {$q_0$};
-   \node[state] (q1) [right=of q0] {$q_1$};
-   \node[state] (qdot) [right=of q1] {$\dots$};
-   \node[state] (q11) [right=of qdot] {$q_{11}$};
-   \node[state,accepting] (q12) [right=of q11] {$q_{acc}$};
+   \node[state] (q1) [right=of q0] {$q_{digit}$};
+   \node[state] (q10) [below=of q0] {$q_{1}$};
+   \node[state] (q10b) [right=of q10] {$q_{10}$};
+   \node[state] (qdot) [right=of q1] {$q_{dot}$};
+   \node[state,accepting] (qf) [right=of qdot] {$q_{acc}$};
 
    \path[->] 
     (q0) edge node {[0-9]} (q1)
-    (q1) edge node {[0-9]} (qdot)
-    (qdot) edge node {[0-9]} (q11)
-    (q11) edge node {[0-9]} (q12);
+    (q0) edge node {1} (q10)
+    (q10) edge node {0} (q10b)
+    (q1) edge [bend left] node {.} (qdot)
+    (q10b) edge [bend right] node {.} (qdot)
+    (qdot) edge node {[0-9]} (qf)
+    (qf) edge [loop right] node {[0-9]} (qf);
 \end{tikzpicture}
-\caption{DFA $M_{PRN}$ representing the 12-digit constraint.}
+\caption{DFA $M_{CGPA}$: Transition logic for decimal-based academic scoring.}
 \end{figure}
 
-\subsubsection{DFA for Institutional Domain}
-The following DFA fragment recognizes the specific suffix '@mitaoe.ac.in'.
+\subsubsection{DFA for Institutional Domain (@mitaoe)}
+The following DFA fragment ($M_{domain}$) ensures that the input string ends with the mandatory institutional suffix. This demonstrates the concatenation property of Regular Languages.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto, thick]
+\begin{tikzpicture}[shorten >=1pt,node distance=2.2cm,on grid,auto, thick, scale=0.9, every node/.style={scale=0.9}]
    \node[state,initial] (qat)   {$q_@$};
    \node[state] (qm) [right=of qat] {$q_m$};
    \node[state] (qi) [right=of qm] {$q_i$};
    \node[state] (qt) [right=of qi] {$q_t$};
-   \node[state,accepting] (qf) [right=of qt] {$q_{...in}$};
+   \node[state] (qa) [right=of qt] {$q_a$};
+   \node[state] (qo) [below=of qa] {$q_o$};
+   \node[state] (qe) [left=of qo] {$q_e$};
+   \node[state,accepting] (qf) [left=of qe] {$q_{acc}$};
 
    \path[->] 
     (qat) edge node {@} (qm)
     (qm)  edge node {m} (qi)
     (qi)  edge node {i} (qt)
-    (qt)  edge node {...} (qf);
+    (qt)  edge node {t} (qa)
+    (qa)  edge node {a} (qo)
+    (qo)  edge node {o} (qe)
+    (qe)  edge node {e} (qf);
 \end{tikzpicture}
-\caption{Subset DFA for domain validation.}
+\caption{Explicit DFA state transitions for '@mitaoe' domain verification.}
 \end{figure}
 
 \newpage
