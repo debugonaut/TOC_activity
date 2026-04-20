@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ifsc: /^[A-Z]{4}0[A-Z0-9]{6}$/,
         account: /^[0-9]{9,18}$/,
         amount: /^\d+(\.\d{1,2})?$/,
-        date: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/
+        date: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/
     };
 
     // Category Detectors (Rule-Based Analyzer)
