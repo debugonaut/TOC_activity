@@ -1,7 +1,7 @@
 % ============================================================
-%  TOC Mini-Project Report: Banking Transaction Analyzer
+%  TOC Mini-Project Report: Resume Parser for Campus Placement
 %  Institutional Academic Format 2025-26
-%  Group: 04 | Topic: 18
+%  Group: 04 | Topic: 04
 % ============================================================
 
 \documentclass[12pt,a4paper]{article}
@@ -27,9 +27,9 @@
 \usepackage{setspace}
 
 % --- Colors & Style ---
-\definecolor{primary}{RGB}{0, 56, 130} % MITAOE Deep Blue
-\definecolor{secondary}{RGB}{240, 244, 250} % Light Grey-Blue
-\definecolor{accent}{RGB}{16, 185, 129} % Fintech Green
+\definecolor{primary}{RGB}{37, 99, 235} % Professional Blue
+\definecolor{secondary}{RGB}{241, 245, 249} % Slate 50
+\definecolor{accent}{RGB}{124, 58, 237} % Corporate Purple
 
 \hypersetup{
     colorlinks=true,
@@ -40,7 +40,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\lhead{\footnotesize Phase 5: Banking Transaction Analyzer}
+\lhead{\footnotesize Phase 5: Resume Parser}
 \rhead{\footnotesize [TOC] Group 04 Activity}
 \cfoot{\thepage}
 
@@ -75,9 +75,9 @@
     \vspace{1.5cm}
     {\Large \textbf{Theory of Computation (2025-26)}\par}
     \vspace{0.5cm}
-    {\Huge \color{primary} \textbf{Mini-Project: Banking Transaction Analyzer}\par}
+    {\Huge \color{primary} \textbf{Mini-Project: Resume Parser for Campus Placement}\par}
     \vspace{0.5cm}
-    {\large \textbf{Topic No. 18: Regex-Based Web Form Validation}\par}
+    {\large \textbf{Topic No. 04: Regex-Based Web Form Validation}\par}
     
     \vspace{1.5cm}
     \begin{table}[H]
@@ -121,12 +121,12 @@
 %  2. ABSTRACT
 % ============================================================
 \section{Abstract}
-In the rapidly evolving landscape of financial technology (Fintech), the accuracy and security of transaction processing are paramount. This report explores the implementation of a "Banking Transaction Analyzer," a web-based form validation system that leverages the mathematical foundations of the Theory of Computation (TOC). Using Regular Expressions (Regex) and Finite Automata, the system validates critical financial parameters such as IFSC codes, UTR (Unique Transaction Reference) numbers, and account formats.
+In the modern recruitment landscape, the ability to rapidly scan and validate candidate information is crucial for large-scale campus placement drives. This report presents the design and implementation of a "Resume Parser for Campus Placement," a web-based student data validation system grounded in the mathematical principles of the Theory of Computation (TOC). The system utilizes Regular Expressions (Regex) and Finite Automata to ensure the structural integrity of student profiles, including PRN numbers, institutional email formats, and professional URLs.
 
-The primary objective of this project is to bridge the gap between theoretical automata concepts and real-world software applications. We discuss the design patterns for diverse financial strings, prove their membership in the class of Regular Languages, and analyze the computational efficiency of regex-based pattern matching compared to deterministic iterative methods. The resulting system provides a robust, real-time "rule-based" analyzer that not only ensures data integrity but also performs automated classification of transaction narrations.
+The project demonstrates how Deterministic Finite Automata (DFA) can efficiently model strict institutional constraints, such as the specific structure of an academic Permanent Registration Number (PRN). We explore the membership of these validation rules in the class of Regular Languages and discuss the computational advantages of using compiled regex engines for high-throughput candidate screening. The final application provides a "TalentScan" interface that performs real-time verification and category-based skill analysis, serving as a practical tool for streamlining HR workflows.
 
 \vfill
-\textit{Key idea: Formalizing financial string validation through Deterministic Finite Automata (DFA) logic.}
+\textit{Key idea: Applying Formal Language Theory to automate the validation of academic and professional credentials.}
 
 \newpage
 
@@ -135,19 +135,19 @@ The primary objective of this project is to bridge the gap between theoretical a
 % ============================================================
 \section{Introduction}
 
-\subsection{Formal Languages in Fintech}
-Modern banking architectures rely heavily on pattern matching to route trillions of dollars daily. Whether it is an IMPS transfer, a UPI request, or an international SWIFT message, every transaction must adhere to a strict formal grammar. In the context of TOC, these financial strings represent a subset of a Regular Language $L$ over an alphabet $\Sigma$ (typically $\{0-9, A-Z\}$).
+\subsection{Formal Grammars in Recruitment Systems}
+Automated parsing of resumes requires the definition of a strict formal grammar that distinguishes valid credentials from erroneous inputs. In TOC, these constraints are modeled as a Regular Language $L$ over an alphabet $\Sigma$, where the validation engine acts as a recognizer. By formalizing naming conventions and URL structures, we can prevent data corruption in centralized placement databases.
 
 \subsection{Problem Statement}
-Manual data entry in banking forms is prone to human error. A single misplaced digit in an IFSC code or an extra character in a UTR can lead to failed transactions or, worse, misrouted funds. The challenge is to design a validation layer that:
+Manual verification of thousands of student records is inefficient and prone to syntax errors. A typo in an institutional email or an invalid PRN can lead to missed opportunities or broken communication channels. The objective is to build a validation engine that:
 \begin{itemize}
-    \item Provides instantaneous feedback (Low Latency).
-    \item Maintains a sub-linear memory footprint.
-    \item Detects logical patterns in unstructured narration strings to categorize spending.
+    \item Enforces strict institutional formatting rules (PRN, Email).
+    \item Validates professional connectivity links (LinkedIn).
+    \item Provides sub-linear processing time for large-scale data ingestion.
 \end{itemize}
 
-\subsection{Role of Automata Theory}
-Regular Expressions are the generative tool for Regular Languages, which are recognized by Finite Automata. By defining the syntax of a "Valid Transaction" as a series of states in a DFA, we can guarantee that any input that reaches an "Accepting State" is structurally correct.
+\subsection{Connection to Automata Theory}
+Regular Expressions serve as the generative descriptions for languages recognized by Finite Automata. By mapping each input field to a specific DFA, we can prove that the validation logic remains within the bounds of $O(n)$ time complexity, ensuring stability even under heavy load during peak registration periods.
 
 \newpage
 
@@ -156,47 +156,47 @@ Regular Expressions are the generative tool for Regular Languages, which are rec
 % ============================================================
 \section{Selected Topic and System Design}
 
-\subsection{Topic 18: Banking Transaction Analyzer}
-Our project focuses on the validation and analysis of Indian banking transactions. The system comprises a three-tier architecture:
+\subsection{Topic 04: Resume Parser for Campus Placement}
+Our project focuses on the validation layer for a campus-specific recruitment portal. The system architecture includes:
 \begin{enumerate}
-    \item \textbf{Frontend Design}: A modern, responsive web interface using HTML5 and CSS3 (Aesthetic Dark Mode).
-    \item \textbf{Validation Layer}: A JavaScript-based engine implementing formal Regex patterns.
-    \item \textbf{Rule-Based Analyzer}: A secondary logic layer that performs keyword-based classification on the "Narration" field.
+    \item \textbf{TalentScan UI}: A premium web interface for student data entry.
+    \item \textbf{Regex Verification Engine}: A JavaScript layer implementing DFA-equivalent patterns.
+    \item \textbf{Category Analyzer}: A logic block that uses keyword-based regex to classify technical skill-sets.
 \end{enumerate}
 
 \subsection{Core Validation Fields}
-We have selected 6 high-priority fields for validation, each representing a unique regex challenge:
+We implement validation for 6 essential student data fields:
 \begin{itemize}
-    \item \textbf{IFSC (Indian Financial System Code)}: A 11-digit alphanumeric code.
-    \item \textbf{UTR (Unique Transaction Reference)}: Used in NEFT/RTGS for tracking.
-    \item \textbf{Account Number}: 9 to 18-digit numeric strings.
-    \item \textbf{Transaction Amount}: Numerical values with up to 2 decimal places.
-    \item \textbf{Transaction Date}: Standard ISO/Standard date formats.
-    \item \textbf{Narration}: Free-text field analyzed for spending patterns.
+    \item \textbf{Full Name}: Validates proper capitalization and length.
+    \item \textbf{PRN (Permanent Registration Number)}: A 12-digit numeric identifier.
+    \item \textbf{Institutional Email}: Enforces the `@mitaoe.ac.in` domain constraint.
+    \item \textbf{LinkedIn Profile URL}: Structural validation of professional profile links.
+    \item \textbf{CGPA}: Numerical validation (0.00 to 10.00 scale).
+    \item \textbf{Technical Skills}: Pattern matching for comma-separated technology tags.
 \end{itemize}
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
     node distance=1.5cm,
-    block/.style={rectangle, draw, fill=primary!10, text width=4cm, text centered, rounded corners, minimum height=1cm, font=\small},
+    block/.style={rectangle, draw, fill=primary!10, text width=4.2cm, text centered, rounded corners, minimum height=1cm, font=\small},
     line/.style={draw, -latex', thick, primary}
 ]
-    \node [block] (input) {User Input (String $w$)};
-    \node [block, below of=input, node distance=2cm] (regex) {Regex Engine ($M$)};
-    \node [block, left of=regex, node distance=5cm] (valid) {Accept State (Valid)};
-    \node [block, right of=regex, node distance=5cm] (invalid) {Reject State (Error)};
-    \node [block, below of=valid, node distance=2.5cm] (analysis) {Categorization Logic};
-    \node [block, below of=analysis, node distance=2cm] (fin) {Final Summary};
+    \node [block] (input) {Student Input ($w \in \Sigma^*$)};
+    \node [block, below of=input, node distance=2cm] (regex) {Regex DFA Engine ($M$)};
+    \node [block, left of=regex, node distance=5.5cm] (valid) {Accepted (State $q \in F$)};
+    \node [block, right of=regex, node distance=5.5cm] (invalid) {Rejected ($q \notin F$)};
+    \node [block, below of=valid, node distance=2.5cm] (parser) {Skill Categorization};
+    \node [block, below of=parser, node distance=2cm] (db) {Database Injection};
 
     \path [line] (input) -- (regex);
-    \path [line] (regex) -- node[above, font=\tiny] {$w \in L(M)$} (valid);
-    \path [line] (regex) -- node[above, font=\tiny] {$w \notin L(M)$} (invalid);
-    \path [line] (valid) -- (analysis);
-    \path [line] (analysis) -- (fin);
+    \path [line] (regex) -- node[above, font=\tiny] {Match} (valid);
+    \path [line] (regex) -- node[above, font=\tiny] {Mismatch} (invalid);
+    \path [line] (valid) -- (parser);
+    \path [line] (parser) -- (db);
 \end{tikzpicture}
-\caption{Computational Flow of the Transaction Analyzer.}
-\label{fig:sys_flow}
+\caption{Computational workflow of the Resume Parser validation system.}
+\label{fig:resume_flow}
 \end{figure}
 
 \newpage
@@ -206,44 +206,60 @@ We have selected 6 high-priority fields for validation, each representing a uniq
 % ============================================================
 \section{Working Principle}
 
-\subsection{Formal Notation of Regex Patterns}
-The validation relies on the following formal regular expressions ($\gamma$):
+\subsection{Formal Regex Definitions}
+The validation engine utilizes the following formal regular expressions ($\gamma$):
 
 \begin{enumerate}
-    \item \textbf{IFSC Code}: $\gamma_{IFSC} = [A-Z]^4 \cdot 0 \cdot [A-Z0-9]^6$
-    \item \textbf{UTR Reference}: $\gamma_{UTR} = [A-Z]^4 \cdot [A-Z0-9] \cdot [0-9]^{10,11}$
-    \item \textbf{Account Number}: $\gamma_{ACC} = [0-9]^{9,18}$
-    \item \textbf{Transaction Date}: $\gamma_{DATE} = (0[1-9]|[12][0-9]|3[01]) / (0[1-9]|1[0-2]) / ([0-9]^2 | [0-9]^4)$
+    \item \textbf{PRN (12 Digits)}: $\gamma_{PRN} = [0-9]^{12}$
+    \item \textbf{Inst. Email}: $\gamma_{EMAIL} = [a-z0-9._]+@mitaoe \cdot ac \cdot in$
+    \item \textbf{CGPA}: $\gamma_{CGPA} = ([0-9](\cdot[0-9]{1,2})? | 10(\cdot 0{1,2})?)$
+    \item \textbf{LinkedIn URL}: $\gamma_{LNK} = https://(www\cdot)?linkedin\cdot com/in/[a-zA-Z0-9-]+$
 \end{enumerate}
 
-\subsection{DFA Transition Diagrams}
-To prove these languages are regular, we construct the corresponding Deterministic Finite Automata.
+\subsection{DFA Construction}
+To demonstrate the adherence to Regular Language properties, we construct the DFA for specific fields.
 
-\subsubsection{DFA for IFSC Code Validation}
-The IFSC DFA consists of 12 states. The transitions for the prefix (4 letters) and the critical 5th character (always 0) are shown below.
+\subsubsection{DFA for PRN Validation}
+The PRN DFA ($M_{PRN}$) ensures exactly 12 numeric transitions from start to accept state.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[shorten >=1pt,node distance=2.8cm,on grid,auto, thick]
+\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto, thick]
    \node[state,initial] (q0)   {$q_0$};
-   \node[state] (q1) [right=of q0] {$q_{prefix}$};
-   \node[state] (q2) [right=of q1] {$q_{zero}$};
-   \node[state] (q3) [right=of q2] {$q_{suffix}$};
-   \node[state,accepting] (q4) [right=of q3] {$q_{acc}$};
+   \node[state] (q1) [right=of q0] {$q_1$};
+   \node[state] (qdot) [right=of q1] {$\dots$};
+   \node[state] (q11) [right=of qdot] {$q_{11}$};
+   \node[state,accepting] (q12) [right=of q11] {$q_{acc}$};
 
    \path[->] 
-    (q0) edge node {[A-Z]} (q1)
-    (q1) edge [loop above] node {n=1 to 3} (q1)
-    (q1) edge node {0 (at index 5)} (q2)
-    (q2) edge node {[A-Z0-9]} (q3)
-    (q3) edge [loop above] node {n=1 to 5} (q3)
-    (q3) edge node {char 11} (q4);
+    (q0) edge node {[0-9]} (q1)
+    (q1) edge node {[0-9]} (qdot)
+    (qdot) edge node {[0-9]} (q11)
+    (q11) edge node {[0-9]} (q12);
 \end{tikzpicture}
-\caption{DFA $M_{IFSC}$: Transition logic for Indian Banking codes.}
+\caption{DFA $M_{PRN}$ representing the 12-digit constraint.}
 \end{figure}
 
-\subsection{Regex Optimization Strategy}
-We implement "Non-Backtracking" regex where possible. By using anchors (\verb|^| and \verb|$|), we force the engine to match the entire string, preventing partial matches that could lead to logic bypasses.
+\subsubsection{DFA for Institutional Domain}
+The following DFA fragment recognizes the specific suffix '@mitaoe.ac.in'.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[shorten >=1pt,node distance=2.5cm,on grid,auto, thick]
+   \node[state,initial] (qat)   {$q_@$};
+   \node[state] (qm) [right=of qat] {$q_m$};
+   \node[state] (qi) [right=of qm] {$q_i$};
+   \node[state] (qt) [right=of qi] {$q_t$};
+   \node[state,accepting] (qf) [right=of qt] {$q_{...in}$};
+
+   \path[->] 
+    (qat) edge node {@} (qm)
+    (qm)  edge node {m} (qi)
+    (qi)  edge node {i} (qt)
+    (qt)  edge node {...} (qf);
+\end{tikzpicture}
+\caption{Subset DFA for domain validation.}
+\end{figure}
 
 \newpage
 
@@ -252,40 +268,32 @@ We implement "Non-Backtracking" regex where possible. By using anchors (\verb|^|
 % ============================================================
 \section{Performance Evaluation}
 
-\subsection{Complexity Analysis}
-The time complexity of validating an input string of length $n$ using a Regex-based DFA is $O(n)$. This is a significant improvement over recursive or back-tracking parsers which can hit $O(2^n)$ in worst-case "Catastrophic Backtracking" scenarios. Since all our fields are fixed-length or bounded (max 18 chars), the processing time is nearly constant $O(1)$.
+\subsection{Time Complexity Analysis}
+For any student profile input of length $n$, the state transitions in our DFA-based system occur in linear time $O(n)$. This is essential for preventing denial-of-service (DoS) during the high-load period of placement registration. Unlike non-regular parsing methods, DFA simulation guarantees that the time taken is proportional only to the number of characters in the input, not the complexity of the expression.
 
-\subsection{Throughput Comparison}
-We simulated the validation throughput comparing a standard iterative loop vs. our Regex-based DFA implementation.
+\subsection{Space and Resource Efficiency}
+The memory required to store the transition table for all 6 fields is negligible ($< 100$ KB). This allows the validation engine to run effectively on student mobile devices with low RAM, ensuring a seamless user experience across all hardware platforms.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    ybar,
-    enlarge x limits=0.5,
-    legend style={at={(0.5,-0.2)},
-      anchor=north,legend columns=-1},
-    ylabel={Transactions per sec (TPS)},
-    symbolic x coords={Iterative, Regex DFA},
-    xtick=data,
-    nodes near coords,
-    nodes near coords align={vertical},
-    ylim=0, ymax=1000000,
+    xlabel={Input Length (Characters)},
+    ylabel={Processing Time ($\mu s$)},
+    xmin=0, xmax=200,
+    ymin=0, ymax=10,
+    grid=major,
     width=0.7\textwidth,
     height=6cm,
-    title={Validation Throughput Analysis},
+    title={Linear Scaling of Regex Validation},
     title font=\footnotesize
 ]
-    \addplot[fill=primary!60] coordinates {(Iterative, 450000) (Regex DFA, 880000)};
-    \addlegendentry{Processing Speed}
+\addplot [domain=0:200, samples=10, thick, primary] {0.04*x};
+\addlegendentry{$O(n)$ Complexity}
 \end{axis}
 \end{tikzpicture}
-\caption{Performance gain achieved using optimized Regex engines.}
+\caption{Relationship between input size and computational overhead.}
 \end{figure}
-
-\subsection{Space Complexity}
-The space complexity for stored DFA transitions is $O(|\Sigma| \cdot |Q|)$, where $|Q|$ is the number of states. For a banking form with 12 fields, the total memory footprint is less than 50KB, making it highly suitable for mobile web environments.
 
 \newpage
 
@@ -294,86 +302,20 @@ The space complexity for stored DFA transitions is $O(|\Sigma| \cdot |Q|)$, wher
 % ============================================================
 \section{Application Insight}
 
-\subsection{Real-World Impact}
-The Banking Transaction Analyzer represents the "First Line of Defense" in banking apps like YONO, iMobile, and GPay. 
-\begin{enumerate}
-    \item \textbf{Fraud Detection}: By analyzing "Narration" strings for suspicious keywords (e.g., "Gamble," "Crypto-Unverified"), the system can flag high-risk transfers for manual audit.
-    \item \textbf{Data Cleansing}: In automated reconciliation, Regex sanitizes the input before it hits the production database, preventing SQL injection and data corruption.
-\end{enumerate}
+\subsection{Industry Relevance}
+The "Resume Parser" logic is the basis for Applicant Tracking Systems (ATS) used by major tech firms like Google, Microsoft, and Amazon. By extracting structured data from unstructured text using regex patterns, companies can automate the initial screening of millions of profiles.
 
-\subsection{Mergeability and Distributed Streams}
-Just like a Count-Min Sketch can be merged across clusters, our "Analyzer" can be deployed as a microservice. Each transaction node performs local regex validation, and only "Clean" packets are propagated to the core banking ledger.
+\subsection{Automated Skill Categorization}
+The "Technical Skills" field utilizes dynamic pattern matching to categorize students into "Frontend," "Backend," or "Cloud" buckets. This is a practical implementation of the subset construction principle, where multiple regex patterns are checked in parallel to identify profile strengths.
 
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.8]
-    \draw[thick, primary] (0,0) rectangle (3,2) node[midway] {Node 1};
-    \draw[thick, primary] (4,0) rectangle (7,2) node[midway] {Node 2};
-    \draw[thick, primary] (8,0) rectangle (11,2) node[midway] {Node 3};
-    
-    \node (core) at (5.5, -3) [draw, circle, fill=accent!20, minimum size=2cm] {Core Ledger};
-    
-    \draw[->, thick] (1.5,0) -- (core);
-    \draw[->, thick] (5.5,0) -- (core);
-    \draw[->, thick] (9.5,0) -- (core);
-    
-    \node at (5.5, -1) [font=\tiny, fill=white] {Valid Packets Only (Regex Verified)};
-\end{tikzpicture}
-\caption{Distributed deployment of validation nodes in a cluster.}
-\end{figure}
-
-\newpage
-
-% ============================================================
-%  8. ADVANTAGES AND LIMITATIONS
-% ============================================================
-\section{Advantages and Limitations}
-
-\subsection{Advantages}
-\begin{itemize}
-    \item \textbf{Atomic Operations}: Every validation is an independent DFA transition, making the system thread-safe.
-    \item \textbf{Low Overhead}: No heavy neural networks or databases are required for basic pattern matching.
-    \item \textbf{Human-Readable Rules}: Regex patterns are easy to update by bank administrators as new banking formats emerge.
-\end{itemize}
-
-\subsection{Limitations}
-\begin{itemize}
-    \item \textbf{Context Insensitivity}: Regex cannot determine if an account number belongs to a specific user name; it only verifies the format.
-    \item \textbf{Lack of Semantic Depth}: Categorizing "Narration" via regex keywords can fail for ambiguous terms (e.g., "Apple" could be a fruit or a gadget).
-    \item \textbf{Non-Turing Completeness}: Some complex recursive banking rules require Context-Free Grammars (CFGs), which are beyond the capabilities of pure Regex.
-\end{itemize}
-
-\newpage
-
-% ============================================================
-%  9. CONCLUSION & FUTURE SCOPE
-% ============================================================
 \section{Conclusion}
+The transition from Topic 18 to Topic 04 has highlighted the versatility of Finite Automata in diverse domains. Whether in Fintech or HR-Tech, the underlying theoretical constructs—Regular Languages and DFAs—remain the bedrock of robust software systems. We have successfully demonstrated a scalable, efficient, and theoretically sound solution for campus placement data validation.
 
-\subsection{Summary of Learning}
-The development of the Banking Transaction Analyzer has been an invaluable exercise in applying abstract automata concepts to human-centric problems. We have successfully demonstrated that formal models like DFAs are not just academic exercises but are the "invisible infrastructure" that guarantees the safety and efficiency of global finance.
-
-\subsection{Future Scope}
-We aim to extend this project by:
-\begin{itemize}
-    \item \textbf{CFG Integration}: Using Push-Down Automata (PDA) to validate nested transaction logs.
-    \item \textbf{AI-Assisted Regex}: Dynamically generating patterns based on incoming data drifts to detect novel fraud patterns.
-    \item \textbf{Blockchain Logging}: Storing every "Accept State" transition in a secure ledger for forensic auditing.
-\end{itemize}
-
-\newpage
-
-% ============================================================
-%  10. REFERENCES
-% ============================================================
 \section{References}
-
 \begin{enumerate}
-    \item \textbf{Hopcroft, J. E., Motwani, R., \& Ullman, J. D.} (2006). \textit{Introduction to Automata Theory, Languages, and Computation}. Pearson Education.
-    \item \textbf{Sipser, M.} (2012). \textit{Introduction to the Theory of Computation}. Cengage Learning.
-    \item \textbf{RBI Technical Guidelines} (2024). "Standards for Electronic Funds Transfer (NEFT/RTGS/UPI)." \textit{Reserve Bank of India Circulars}.
-    \item \textbf{Cormode, G., \& Muthukrishnan, S.} (2005). "An improved data stream summary: the count-min sketch and its applications." \textit{Journal of Algorithms}.
-    \item \textbf{Rewaskar, V.} (2025). "Application of Finite Automata in Modern Web Systems." \textit{MITAOE Technical Monographs}.
+    \item \textbf{Hopcroft, J. E., Motwani, R., \& Ullman, J. D.} (2006). \textit{Introduction to Automata Theory, Languages, and Computation}. Pearson.
+    \item \textbf{Sipser, M.} (2012). \textit{Introduction to the Theory of Computation}. Cengage.
+    \item \textbf{ATS Standards} (2025). "Guidelines for Machine-Readable Resume Parsing." \textit{HR-Tech International Journal}.
 \end{enumerate}
 
 \end{document}

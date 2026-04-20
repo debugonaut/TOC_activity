@@ -1,165 +1,150 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('transactionForm');
-    const results = document.getElementById('results');
-    const analyzeBtn = document.getElementById('analyzeBtn');
+    const resumeForm = document.getElementById('resumeForm');
     const demoBtn = document.getElementById('demoBtn');
+    const parseBtn = document.getElementById('parseBtn');
+    const resultsWrapper = document.getElementById('results');
 
-    // REGEX PATTERNS (Core Theory Component)
-    const patterns = {
-        utr: /^[A-Z]{4}[A-Z0-9][0-9]{10,11}$/,
-        ifsc: /^[A-Z]{4}0[A-Z0-9]{6}$/,
-        account: /^[0-9]{9,18}$/,
-        amount: /^\d+(\.\d{1,2})?$/,
-        date: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/
+    // === TOC REGEX PATTERNS (Formal Language Definitions) ===
+    const REGEX_PATTERNS = {
+        fullName: /^[A-Z][a-z]+(\s[A-Z][a-z]+)+$/, // Proper Capitalized Name
+        prn: /^\d{12}$/, // 12-digit PRN
+        email: /^[a-zA-Z0-9.]+@mitaoe\.ac\.in$/, // Institutional Domain
+        linkedin: /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/, // Prof. Profile
+        cgpa: /^([0-9](\.\d{1,2})?|10(\.0{1,2})?)$/, // 0.00 to 10.00
+        skills: /^([a-zA-Z0-9+# ]+,?\s?)+$/ // CSV Skill list
     };
 
-    // Category Detectors (Rule-Based Analyzer)
-    const categories = [
-        { name: 'Income/Salary', regex: /SALARY|PAYROLL|WAGES|CREDIT/i },
-        { name: 'Housing/Rent', regex: /RENT|LEASE|MAINTENANCE/i },
-        { name: 'Utilities', regex: /ELECTRICITY|WATER|GAS|INTERNET|WIFI|BROADBAND/i },
-        { name: 'Dining/Food', regex: /SWIGGY|ZOMATO|RESTAURANT|DINING|FOOD/i },
-        { name: 'Entertainment', regex: /NETFLIX|AMAZON|HOTSTAR|SUBSCRIPTION|GOOGLE/i },
-        { name: 'Shopping', regex: /FLIPKART|AMAZON|MYNTRA|RETAIL|SHOP/i }
+    // === FIELD MAPPING ===
+    const fields = [
+        { id: 'fullName', pattern: REGEX_PATTERNS.fullName, group: 'nameGroup' },
+        { id: 'prn', pattern: REGEX_PATTERNS.prn, group: 'prnGroup' },
+        { id: 'email', pattern: REGEX_PATTERNS.email, group: 'emailGroup' },
+        { id: 'linkedin', pattern: REGEX_PATTERNS.linkedin, group: 'linkedinGroup' },
+        { id: 'cgpa', pattern: REGEX_PATTERNS.cgpa, group: 'cgpaGroup' }
     ];
 
-    const validateField = (id, pattern) => {
-        const input = document.getElementById(id);
-        const group = document.getElementById(`${id}Group`);
-        const value = input.value.trim();
+    // === VALIDATION LOGIC ===
+    const validateField = (fieldId, pattern, groupId) => {
+        const input = document.getElementById(fieldId);
+        const group = document.getElementById(groupId);
+        const isValid = pattern.test(input.value.trim());
 
-        if (pattern.test(value)) {
-            group.classList.remove('invalid');
-            return true;
-        } else {
-            group.classList.add('invalid');
+        if (input.value.trim() === '') {
+            group.classList.remove('error', 'success');
             return false;
         }
+
+        if (isValid) {
+            group.classList.remove('error');
+            group.classList.add('success');
+        } else {
+            group.classList.remove('success');
+            group.classList.add('error');
+        }
+        return isValid;
     };
 
-    form.addEventListener('submit', (e) => {
+    // Real-time validation
+    fields.forEach(field => {
+        const input = document.getElementById(field.id);
+        input.addEventListener('input', () => {
+            validateField(field.id, field.pattern, field.group);
+        });
+    });
+
+    // === SKILL ANALYZER (Rule-Based Extraction) ===
+    const analyzeSkills = (skillsText) => {
+        const skills = skillsText.toLowerCase();
+        let expertise = "General Engineering";
+        let tier = "Standard Tier";
+
+        // Logic based on keywords
+        if (skills.match(/react|vue|angular|css|html|tailwind/)) {
+            expertise = "Frontend Development";
+        } else if (skills.match(/node|express|python|django|flask|golang/)) {
+            expertise = "Backend Development";
+        } else if (skills.match(/aws|azure|gcp|docker|kubernetes/)) {
+            expertise = "DevOps & Cloud";
+        } else if (skills.match(/tensorflow|pytorch|pandas|numpy|scikit/)) {
+            expertise = "Data Science/ML";
+        }
+
+        // Tiering based on depth (number of skills)
+        const skillCount = skills.split(',').length;
+        if (skillCount > 5) {
+            tier = "Premium Tier (Product-based)";
+        } else if (skillCount >= 3) {
+            tier = "High Tier (Service+Consultancy)";
+        }
+
+        return { expertise, tier };
+    };
+
+    // === FORM SUBMISSION ===
+    resumeForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Validate all fields
-        const isUtrValid = validateField('utr', patterns.utr);
-        const isIfscValid = validateField('ifsc', patterns.ifsc);
-        const isAccountValid = validateField('account', patterns.account);
-        const isAmountValid = validateField('amount', patterns.amount);
-        const isDateValid = validateField('date', patterns.date);
+        let formIsValid = true;
+        fields.forEach(field => {
+            if (!validateField(field.id, field.pattern, field.group)) {
+                formIsValid = false;
+            }
+        });
 
-        if (isUtrValid && isIfscValid && isAccountValid && isAmountValid && isDateValid) {
+        if (formIsValid) {
             // Show loading state
-            analyzeBtn.classList.add('loading');
-            analyzeBtn.disabled = true;
-
+            parseBtn.classList.add('loading');
+            
             setTimeout(() => {
-                analyzeBtn.classList.remove('loading');
-                analyzeBtn.disabled = false;
+                const skillsVal = document.getElementById('skills').value;
+                const analysis = analyzeSkills(skillsVal);
 
-                // Simple Analyzer Logic
-                const narration = document.getElementById('narration').value.trim();
-                let detectedCategory = 'General Transfer';
+                // Update results
+                document.getElementById('resExpertise').textContent = analysis.expertise;
+                document.getElementById('resPool').textContent = analysis.tier;
                 
-                for (const cat of categories) {
-                    if (cat.regex.test(narration)) {
-                        detectedCategory = cat.name;
-                        break;
-                    }
-                }
-
-                // Update UI
-                document.getElementById('resCategory').textContent = detectedCategory;
+                // Show results card
+                resultsWrapper.classList.remove('hidden');
+                resultsWrapper.scrollIntoView({ behavior: 'smooth' });
                 
-                // Deterministic Risk Analysis
-                const amount = parseFloat(document.getElementById('amount').value);
-                const riskElem = document.getElementById('resRisk');
-                
-                if (amount > 100000) {
-                    riskElem.textContent = 'High (Compliance Review)';
-                    riskElem.className = 'value high-risk';
-                    riskElem.style.color = '#ef4444';
-                } else if (amount > 20000) {
-                    riskElem.textContent = 'Medium';
-                    riskElem.className = 'value medium-risk';
-                    riskElem.style.color = '#f59e0b';
-                } else {
-                    riskElem.textContent = 'Low';
-                    riskElem.className = 'value low-risk';
-                    riskElem.style.color = '#10b981';
-                }
-
-                results.classList.remove('hidden');
-                results.scrollIntoView({ behavior: 'smooth' });
-            }, 800);
+                parseBtn.classList.remove('loading');
+            }, 1200);
+        } else {
+            alert('Please fix the errors in the form before submitting.');
         }
     });
 
-    // Real-time validation
-    const inputs = ['utr', 'ifsc', 'account', 'amount', 'date'];
-    inputs.forEach(id => {
-        document.getElementById(id).addEventListener('input', () => {
-            validateField(id, patterns[id]);
-        });
-    });
-
-    // Demo Button Logic with multiple sets
-    let currentDemoIndex = 0;
-    const demoSets = [
-        {
-            utr: 'SBIN12345678901',
-            ifsc: 'BARB0KOTHAR',
-            account: '9192939495',
-            amount: '45000',
-            date: '21/02/24',
-            narration: 'RENT PAYMENT FOR APRIL'
-        },
-        {
-            utr: 'HDFCR9912233445',
-            ifsc: 'HDFC0001234',
-            account: '501004455667',
-            amount: '125000',
-            date: '01/04/2026',
-            narration: 'MONTHLY SALARY CREDIT - HR DEPT'
-        },
-        {
-            utr: 'ICICR0088776655',
-            ifsc: 'ICIC0000011',
-            account: '001122334455',
-            amount: '840',
-            date: '15/04/2026',
-            narration: 'SWIGGY ORDER #88291'
-        },
-        {
-            utr: 'AXISR1122334455',
-            ifsc: 'UTIB0000210',
-            account: '912010001234',
-            amount: '3200',
-            date: '18/04/2026',
-            narration: 'ELECTRICITY BILL PAYMENT'
-        },
-        {
-            utr: 'KKBKR0001112223',
-            ifsc: 'KKBK0000958',
-            account: '123456789012',
-            amount: '12500',
-            date: '19/04/2026',
-            narration: 'AMAZON ONLINE SHOPPING'
-        }
-    ];
-
+    // === DEMO DATA GENERATOR ===
     demoBtn.addEventListener('click', () => {
-        const data = demoSets[currentDemoIndex];
-        Object.keys(data).forEach(id => {
-            const el = document.getElementById(id);
-            el.value = data[id];
-            validateField(id, patterns[id] || /.*/);
-        });
+        const demoProfiles = [
+            {
+                name: "Aadesh Khande",
+                prn: "202401100090",
+                email: "aadesh.k@mitaoe.ac.in",
+                linkedin: "https://www.linkedin.com/in/aadeshkhande",
+                cgpa: "9.25",
+                skills: "React, Node.js, TypeScript, AWS, Docker, Python"
+            },
+            {
+                name: "Sankalp Dabhade",
+                prn: "202401100135",
+                email: "sankalp.d@mitaoe.ac.in",
+                linkedin: "https://www.linkedin.com/in/sankalpd",
+                cgpa: "8.80",
+                skills: "Java, Spring Boot, MySQL, Git, Jenkins"
+            }
+        ];
 
-        // Loop through the sets
-        currentDemoIndex = (currentDemoIndex + 1) % demoSets.length;
-        
-        // Visual feedback for cycle
-        demoBtn.textContent = `Demo: ${data.narration.split(' ')[0]}...`;
-        setTimeout(() => { demoBtn.textContent = 'Fill Next Demo'; }, 1000);
+        const randomProfile = demoProfiles[Math.floor(Math.random() * demoProfiles.length)];
+
+        document.getElementById('fullName').value = randomProfile.name;
+        document.getElementById('prn').value = randomProfile.prn;
+        document.getElementById('email').value = randomProfile.email;
+        document.getElementById('linkedin').value = randomProfile.linkedin;
+        document.getElementById('cgpa').value = randomProfile.cgpa;
+        document.getElementById('skills').value = randomProfile.skills;
+
+        // Trigger validation visuals
+        fields.forEach(field => validateField(field.id, field.pattern, field.group));
     });
 });

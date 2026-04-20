@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BankGuard | Transaction Analyzer</title>
+    <title>TalentScan | Resume Parser</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,67 +22,67 @@
                 <p>Theory of Computation | Prof. Vaibhav Rewaskar</p>
             </div>
             <div class="project-title">
-                <h2>Banking Transaction Analyzer</h2>
-                <div class="badge">Group ID: 04</div>
+                <h2>Resume Parser for Campus Placement</h2>
+                <div class="badge">Topic No. 04</div>
             </div>
         </header>
 
         <section class="main-content">
             <div class="form-wrapper">
-                <form id="transactionForm" novalidate>
+                <form id="resumeForm" novalidate>
                     <div class="input-grid">
-                        <!-- Field 1: Transaction Ref (UTR) -->
-                        <div class="input-group" id="utrGroup">
-                            <label for="utr">Transaction Reference (UTR)</label>
-                            <input type="text" id="utr" placeholder="e.g. SBIN12345678901" autocomplete="off">
-                            <small class="hint">Format: 4 Letters + 11 Digits</small>
-                            <div class="error-msg">Invalid UTR format.</div>
+                        <!-- Field 1: Full Name -->
+                        <div class="input-group" id="nameGroup">
+                            <label for="fullName">Candidate Full Name</label>
+                            <input type="text" id="fullName" placeholder="e.g. Aadesh Khande" autocomplete="off">
+                            <small class="hint">Format: First and Last Name (Capitalized)</small>
+                            <div class="error-msg">Please enter a valid full name.</div>
                         </div>
 
-                        <!-- Field 2: IFSC Code -->
-                        <div class="input-group" id="ifscGroup">
-                            <label for="ifsc">Bank IFSC Code</label>
-                            <input type="text" id="ifsc" placeholder="e.g. BARB0KOTHAR" autocomplete="off">
-                            <small class="hint">Format: 4 Letters + 0 + 6 Alpha-numeric</small>
-                            <div class="error-msg">Invalid IFSC code.</div>
+                        <!-- Field 2: PRN -->
+                        <div class="input-group" id="prnGroup">
+                            <label for="prn">Permanent Registration Number (PRN)</label>
+                            <input type="text" id="prn" placeholder="e.g. 202401100090" autocomplete="off">
+                            <small class="hint">Format: 12-digit numeric code</small>
+                            <div class="error-msg">Invalid PRN format (12 digits required).</div>
                         </div>
 
-                        <!-- Field 3: Account Number -->
-                        <div class="input-group" id="accountGroup">
-                            <label for="account">Account Number</label>
-                            <input type="text" id="account" placeholder="e.g. 912345678910" autocomplete="off">
-                            <small class="hint">Format: 9 to 18 Digits</small>
-                            <div class="error-msg">Invalid Account Number.</div>
+                        <!-- Field 3: Institutional Email -->
+                        <div class="input-group" id="emailGroup">
+                            <label for="email">Institutional Email ID</label>
+                            <input type="email" id="email" placeholder="e.g. student@mitaoe.ac.in" autocomplete="off">
+                            <small class="hint">Must end with @mitaoe.ac.in</small>
+                            <div class="error-msg">Invalid email. Use your college ID.</div>
                         </div>
 
-                        <!-- Field 4: Amount -->
-                        <div class="input-group" id="amountGroup">
-                            <label for="amount">Transaction Amount (₹)</label>
-                            <input type="text" id="amount" placeholder="0.00" autocomplete="off">
-                            <small class="hint">Format: Numerical (up to 2 decimals)</small>
-                            <div class="error-msg">Please enter a valid amount.</div>
+                        <!-- Field 4: LinkedIn URL -->
+                        <div class="input-group" id="linkedinGroup">
+                            <label for="linkedin">LinkedIn Profile URL</label>
+                            <input type="text" id="linkedin" placeholder="https://linkedin.com/in/username" autocomplete="off">
+                            <small class="hint">Format: https://linkedin.com/in/...</small>
+                            <div class="error-msg">Invalid LinkedIn URL format.</div>
                         </div>
 
-                        <!-- Field 5: Date -->
-                        <div class="input-group" id="dateGroup">
-                            <label for="date">Transaction Date</label>
-                            <input type="text" id="date" placeholder="DD/MM/YYYY" autocomplete="off">
-                            <small class="hint">Format: DD/MM/YYYY</small>
-                            <div class="error-msg">Invalid date format.</div>
+                        <!-- Field 5: CGPA -->
+                        <div class="input-group" id="cgpaGroup">
+                            <label for="cgpa">Current CGPA</label>
+                            <input type="text" id="cgpa" placeholder="0.00" autocomplete="off">
+                            <small class="hint">Scale: 0.00 to 10.00</small>
+                            <div class="error-msg">Enter a valid CGPA (0-10).</div>
                         </div>
 
-                        <!-- Field 6: Narration/Category Analysis -->
-                        <div class="input-group full-width" id="narrationGroup">
-                            <label for="narration">Transaction Narration</label>
-                            <textarea id="narration" placeholder="e.g. RENT PAYMENT - APRIL 2024" rows="2"></textarea>
-                            <small class="hint">Analyzer will detect category from patterns.</small>
+                        <!-- Field 6: Technical Skills -->
+                        <div class="input-group full-width" id="skillsGroup">
+                            <label for="skills">Technical Skill-set</label>
+                            <textarea id="skills" placeholder="e.g. React, Node.js, Python, AWS" rows="2"></textarea>
+                            <small class="hint">Separate skills with commas. Parser will categorize expertise.</small>
                         </div>
                     </div>
 
                     <div class="button-group">
-                        <button type="button" id="demoBtn" class="btn-secondary">Fill Demo Data</button>
-                        <button type="submit" id="analyzeBtn">
-                            <span class="btn-text">Analyze Transaction</span>
+                        <button type="button" id="demoBtn" class="btn-secondary">Load Demo Profile</button>
+                        <button type="submit" id="parseBtn">
+                            <span class="btn-text">Parse & Validate Resume</span>
                             <div class="loader"></div>
                         </button>
                     </div>
@@ -91,22 +91,22 @@
 
             <div class="results-wrapper hidden" id="results">
                 <div class="result-card">
-                    <h3>Analysis Result</h3>
-                    <div class="status-badge success">Verified & Logged</div>
+                    <h3>Parsing Result</h3>
+                    <div class="status-badge success">Validation Successful</div>
                     
                     <div class="analysis-details">
                         <div class="detail-item">
-                            <span class="label">Detected Category:</span>
-                            <span class="value" id="resCategory">Unknown</span>
+                            <span class="label">Top Expertise:</span>
+                            <span class="value" id="resExpertise">Software Development</span>
                         </div>
                         <div class="detail-item">
-                            <span class="label">Risk Level:</span>
-                            <span class="value low-risk" id="resRisk">Low</span>
+                            <span class="label">Placement Pool:</span>
+                            <span class="value high-risk" id="resPool">Premium Tier</span>
                         </div>
                     </div>
 
                     <div class="test-report-link">
-                        <p>Theory of Computation validation successful.</p>
+                        <p>DFA state transitions verified for institutional credentials.</p>
                     </div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
             <div class="team-grid">
                 <div class="member">Aadesh Khande <br><span>202401100090</span></div>
                 <div class="member">Sankalp Dabhade <br><span>202401100135</span></div>
-                <div class="member">Anvith Shetty <br><span>2024011000138</span></div>
+                <div class="member">Anvith Shetty <br><span>202401100138</span></div>
                 <div class="member">Chetan Satkar <br><span>202401100114</span></div>
             </div>
         </footer>
