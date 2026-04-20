@@ -195,8 +195,20 @@ input:focus, textarea:focus {
     display: block;
 }
 
+.button-group {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+    .button-group {
+        grid-template-columns: 1fr;
+    }
+}
+
 button {
-    grid-column: span 2;
     background: var(--primary);
     color: var(--bg-dark);
     border: none;
@@ -205,10 +217,20 @@ button {
     font-weight: 800;
     font-size: 1rem;
     cursor: pointer;
-    margin-top: 1rem;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+}
+
+.btn-secondary:hover {
+    background: rgba(59, 130, 246, 0.1);
+    box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.2);
 }
 
 button:hover {

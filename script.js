@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('transactionForm');
     const results = document.getElementById('results');
     const analyzeBtn = document.getElementById('analyzeBtn');
+    const demoBtn = document.getElementById('demoBtn');
 
     // REGEX PATTERNS (Core Theory Component)
     const patterns = {
@@ -98,6 +99,24 @@ document.addEventListener('DOMContentLoaded', () => {
     inputs.forEach(id => {
         document.getElementById(id).addEventListener('input', () => {
             validateField(id, patterns[id]);
+        });
+    });
+
+    // Demo Button Logic
+    demoBtn.addEventListener('click', () => {
+        const demoData = {
+            utr: 'SBIN12345678901',
+            ifsc: 'BARB0KOTHAR',
+            account: '9192939495',
+            amount: '50000',
+            date: '21/02/24',
+            narration: 'RENT PAYMENT FOR APRIL'
+        };
+
+        Object.keys(demoData).forEach(id => {
+            const el = document.getElementById(id);
+            el.value = demoData[id];
+            validateField(id, patterns[id] || /.*/); // Trigger validation UI
         });
     });
 });
