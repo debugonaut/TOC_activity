@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // REGEX PATTERNS (Core Theory Component)
     const patterns = {
-        utr: /^[A-Z]{4}[0-9]{11}$/,
+        utr: /^[A-Z]{4}[A-Z0-9][0-9]{10,11}$/,
         ifsc: /^[A-Z]{4}0[A-Z0-9]{6}$/,
         account: /^[0-9]{9,18}$/,
         amount: /^\d+(\.\d{1,2})?$/,

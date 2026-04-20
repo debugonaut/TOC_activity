@@ -211,7 +211,7 @@ The validation relies on the following formal regular expressions ($\gamma$):
 
 \begin{enumerate}
     \item \textbf{IFSC Code}: $\gamma_{IFSC} = [A-Z]^4 \cdot 0 \cdot [A-Z0-9]^6$
-    \item \textbf{UTR Reference}: $\gamma_{UTR} = [A-Z]^4 \cdot [0-9]^{11}$
+    \item \textbf{UTR Reference}: $\gamma_{UTR} = [A-Z]^4 \cdot [A-Z0-9] \cdot [0-9]^{10,11}$
     \item \textbf{Account Number}: $\gamma_{ACC} = [0-9]^{9,18}$
     \item \textbf{Transaction Date}: $\gamma_{DATE} = (0[1-9]|[12][0-9]|3[01]) / (0[1-9]|1[0-2]) / ([0-9]^2 | [0-9]^4)$
 \end{enumerate}
