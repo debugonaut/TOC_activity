@@ -132,6 +132,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 linkedin: "https://www.linkedin.com/in/sankalpd",
                 cgpa: "8.80",
                 skills: "Java, Spring Boot, MySQL, Git, Jenkins"
+            },
+            {
+                name: "Anvith Shetty",
+                prn: "202401100138",
+                email: "anvith.s@mitaoe.ac.in",
+                linkedin: "https://www.linkedin.com/in/anvithshetty",
+                cgpa: "9.50",
+                skills: "TensorFlow, PyTorch, Python, Pandas, Scikit-learn"
+            },
+            {
+                name: "Chetan Satkar",
+                prn: "202401100114",
+                email: "chetan.s@mitaoe.ac.in",
+                linkedin: "https://www.linkedin.com/in/chetans",
+                cgpa: "8.50",
+                skills: "Angular, HTML5, CSS3, JavaScript, Bootstrap"
+            },
+            {
+                name: "Priya Sharma",
+                prn: "202401100201",
+                email: "priya.s@mitaoe.ac.in",
+                linkedin: "https://www.linkedin.com/in/priya-sharma",
+                cgpa: "9.10",
+                skills: "GCP, Kubernetes, Go, Bash, Terraform"
             }
         ];
 
