@@ -102,21 +102,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Demo Button Logic
-    demoBtn.addEventListener('click', () => {
-        const demoData = {
+    // Demo Button Logic with multiple sets
+    let currentDemoIndex = 0;
+    const demoSets = [
+        {
             utr: 'SBIN12345678901',
             ifsc: 'BARB0KOTHAR',
             account: '9192939495',
-            amount: '50000',
+            amount: '45000',
             date: '21/02/24',
             narration: 'RENT PAYMENT FOR APRIL'
-        };
+        },
+        {
+            utr: 'HDFCR9912233445',
+            ifsc: 'HDFC0001234',
+            account: '501004455667',
+            amount: '125000',
+            date: '01/04/2026',
+            narration: 'MONTHLY SALARY CREDIT - HR DEPT'
+        },
+        {
+            utr: 'ICICR0088776655',
+            ifsc: 'ICIC0000011',
+            account: '001122334455',
+            amount: '840',
+            date: '15/04/2026',
+            narration: 'SWIGGY ORDER #88291'
+        },
+        {
+            utr: 'AXISR1122334455',
+            ifsc: 'UTIB0000210',
+            account: '912010001234',
+            amount: '3200',
+            date: '18/04/2026',
+            narration: 'ELECTRICITY BILL PAYMENT'
+        },
+        {
+            utr: 'KKBKR0001112223',
+            ifsc: 'KKBK0000958',
+            account: '123456789012',
+            amount: '12500',
+            date: '19/04/2026',
+            narration: 'AMAZON ONLINE SHOPPING'
+        }
+    ];
 
-        Object.keys(demoData).forEach(id => {
+    demoBtn.addEventListener('click', () => {
+        const data = demoSets[currentDemoIndex];
+        Object.keys(data).forEach(id => {
             const el = document.getElementById(id);
-            el.value = demoData[id];
-            validateField(id, patterns[id] || /.*/); // Trigger validation UI
+            el.value = data[id];
+            validateField(id, patterns[id] || /.*/);
         });
+
+        // Loop through the sets
+        currentDemoIndex = (currentDemoIndex + 1) % demoSets.length;
+        
+        // Visual feedback for cycle
+        demoBtn.textContent = `Demo: ${data.narration.split(' ')[0]}...`;
+        setTimeout(() => { demoBtn.textContent = 'Fill Next Demo'; }, 1000);
     });
 });
